@@ -13,7 +13,6 @@ type Tag struct {
 
 func GetTags(pageNum int, pageSize int, maps interface{}, params ...interface{})(tags[]Tag){
 	Db.Where(maps, params).Offset(pageNum - 1).Limit(pageSize).Find(&tags)
-	fmt.Println("jason09990:", &tags)
 	return
 }
 
