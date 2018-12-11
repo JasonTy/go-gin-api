@@ -4,19 +4,15 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-
 	"go/gin/api/pkg/setting"
+	"go/gin/api/routers"
+
+	"go/gin/api/models"
 )
 
 func main() {
-	router := gin.Default()
-
-	router.GET("/test", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "test",
-		})
-	})
+	defer models.CloseDB()
+	router := routers.InitRouter()
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", setting.HttpPort),
@@ -25,6 +21,7 @@ func main() {
 		WriteTimeout:   setting.WriteTimeOut,
 		MaxHeaderBytes: 1 << 20,
 	}
+
 
 	s.ListenAndServe()
 }

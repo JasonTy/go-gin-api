@@ -8,10 +8,11 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	"go/gin/api/pkg/setting"
+
 )
 
 
-var db *gorm.DB
+var Db *gorm.DB
 
 type Model struct {
 	ID int `gorm:"primary_key" json:"id"`
@@ -37,25 +38,26 @@ func init() {
 	host = sec.Key("HOST").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
 
-	db, err := gorm.Open(dbType,  fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	Db, err = gorm.Open(dbType,  fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		user,
 		password,
 		host,
 		dbName))
 
+
 	if err != nil {
-		log.Println(err)
+		log.Println("err:", err)
 	}
 
 	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return tablePrefix + defaultTableName
 	}
 
-	db.SingularTable(true)
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(100)
+	Db.SingularTable(true)
+	Db.DB().SetMaxIdleConns(10)
+	Db.DB().SetMaxOpenConns(100)
 }
 
 func CloseDB() {
-	defer db.Close()
+	defer Db.Close()
 }
