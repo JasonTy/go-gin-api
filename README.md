@@ -4,7 +4,7 @@ Configuration files are missing and need to be added manually.
 
 ```touch app.ini```
 
-The configuration format is as follows:
+#The configuration format is as follows:#
 ```
 RUN_MODULE = debug
 
@@ -17,8 +17,6 @@ JWT_SECRET = 312321$3213123213
 HTTP_PORT = 8000 
 READ_TIMEOUT = 60
 WRITE_TIMEOUT = 60
-
-
 
 
 [database]
